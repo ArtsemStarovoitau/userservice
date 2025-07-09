@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import java.time.YearMonth;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Data
