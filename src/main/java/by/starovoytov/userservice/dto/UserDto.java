@@ -7,9 +7,10 @@ import jakarta.validation.constraints.Past;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.Set;
+import java.io.Serializable;
 
 @Data
-public class UserDto {
+public class UserDto implements Serializable {
     private Long id;
 
     @NotBlank(message = "Name cannot be blank")
