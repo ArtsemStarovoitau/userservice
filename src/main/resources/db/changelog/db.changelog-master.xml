@@ -3,8 +3,56 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+                           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/changeset/001-create-users-table.xml"/>
+    <changeSet id="1" author="artem">
+        <comment>Create users table with a unique index on email</comment>
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_users_email"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="artem">
+        <comment>Create card_info table with a foreign key to users</comment>
+        <createTable tableName="card_info">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_cardinfo_on_user" references="users(id)"/>
+            </column>
+            <column name="number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="holder" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration_date" type="VARCHAR(7)" remarks="Stores date in YYYY-MM format">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="artem">
+        <comment>Add performance index on card_info.user_id</comment>
+        <createIndex indexName="idx_cardinfo_user_id"
+                     tableName="card_info">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
 
 </databaseChangeLog>
