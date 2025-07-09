@@ -1,7 +1,5 @@
 package by.starovoytov.userservice.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,16 +9,16 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "users")
-class User {
+@Table(name = "card_info")
+class CarfInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String surname;
-
-    private LocalDate birthDate;
-    private String email;
+    private Long userId;
+    
+    private String number;
+    private String holder;
+    private String expirationDate;
 }
