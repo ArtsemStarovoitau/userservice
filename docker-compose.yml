@@ -10,9 +10,11 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:5432/userservice_db
       - SPRING_DATASOURCE_USERNAME=devuser
       - SPRING_DATASOURCE_PASSWORD=devsecret
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
     depends_on:
       - postgres_db
+      - redis 
 
   postgres_db:
     image: postgres:15
@@ -27,5 +29,15 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: always
 
+  redis:
+    image: redis:7-alpine 
+    container_name: redis_prod
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: always
+
 volumes:
   postgres-data:
+  redis-data:
