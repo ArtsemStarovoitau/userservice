@@ -23,7 +23,6 @@ public class CardInfoDto {
     @NotNull(message = "Expiration date must be provided")
     @Future(message = "Card expiration date must be in the future")
     private YearMonth expirationDate;
-    
-    @JsonIgnore 
+     
     private Long userId;
 }
