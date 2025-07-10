@@ -7,10 +7,9 @@ import jakarta.validation.constraints.Past;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.Set;
-import java.io.Serializable;
 
 @Data
-public class UserDto implements Serializable {
+public class UserDto {
     private Long id;
 
     @NotBlank(message = "Name cannot be blank")
@@ -26,6 +25,6 @@ public class UserDto implements Serializable {
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email should be valid")
     private String email;
-    
+
     private Set<CardInfoDto> cards;
 }

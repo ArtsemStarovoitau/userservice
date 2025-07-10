@@ -1,12 +1,15 @@
 package by.starovoytov.userservice.dto;
 
+import by.starovoytov.userservice.config.json.YearMonthDeserializer;
+import by.starovoytov.userservice.config.json.YearMonthSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import java.time.YearMonth;
-
 
 @Data
 public class CardInfoDto {
@@ -21,7 +24,9 @@ public class CardInfoDto {
 
     @NotNull(message = "Expiration date must be provided")
     @Future(message = "Card expiration date must be in the future")
+    @JsonSerialize(using = YearMonthSerializer.class)
+    @JsonDeserialize(using = YearMonthDeserializer.class)
     private YearMonth expirationDate;
-     
+
     private Long userId;
 }
