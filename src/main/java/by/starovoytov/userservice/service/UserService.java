@@ -22,9 +22,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    /**
-     * При создании пользователя сразу кладем его в оба кэша: по ID и по Email.
-     */
     @Transactional
     @Caching(put = {
         @CachePut(value = "users", key = "#result.id"),
@@ -59,11 +56,7 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    /**
-     * При обновлении также обновляем кэш по ID и Email.
-     * Примечание: Эта реализация не удаляет из кэша старую запись по email, если email был изменен.
-     * Эта старая запись просто "умрет" по истечении TTL (времени жизни) кэша.
-     */
+
     @Transactional
     @Caching(put = {
         @CachePut(value = "users", key = "#id"),
@@ -79,10 +72,6 @@ public class UserService {
         return userMapper.toDto(updatedUser);
     }
 
-    /**
-     * Теперь удаление работает корректно. Сначала находим пользователя,
-     * чтобы получить его email, а затем удаляем его из БД и из обоих кэшей.
-     */
     @Transactional
     @Caching(evict = {
         @CacheEvict(value = "users", key = "#id"),
@@ -92,13 +81,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Вспомогательный статический метод, который можно вызывать из SpEL
     public static String findEmailById(Long id, Object target) {
         UserService service = (UserService) target;
         try {
             return service.userRepository.findById(id).map(User::getEmail).orElse(null);
         } catch (Exception e) {
-            // Если пользователь уже удален, нам не нужно вызывать ошибку.
             return null;
         }
     }

@@ -5,7 +5,8 @@ COPY gradle ./gradle
 COPY gradlew ./
 COPY src ./src
 RUN chmod +x ./gradlew
-RUN ./gradlew build -x test --no-daemon
+#RUN ./gradlew build -x test --no-daemon
+RUN ./gradlew build --no-daemon
 
 FROM eclipse-temurin:21-jre-alpine AS runtime
 WORKDIR /app

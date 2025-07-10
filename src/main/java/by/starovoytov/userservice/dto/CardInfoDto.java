@@ -7,11 +7,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.validator.constraints.CreditCardNumber;
 import java.time.YearMonth;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CardInfoDto {
     private Long id;
 
